@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NukeDogeia</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #1a0f0f, #050202 70%);
+    color: #ffd6a5;
+}
+
+/* NAVBAR */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 15px;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255,120,0,0.2);
+}
+
+nav a {
+    color: #ff7b00;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+nav a:hover {
+    text-shadow: 0 0 10px #ff7b00;
+}
+
+/* SECTIONS */
+section {
+    min-height: 100vh;
+    padding: 120px 20px 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* CARD */
+.container {
+    background: rgba(255, 80, 0, 0.05);
+    border: 1px solid rgba(255, 120, 0, 0.25);
+    border-radius: 20px;
+    padding: 40px;
+    width: 90%;
+    max-width: 700px;
+    text-align: center;
+}
+
+/* TITLE */
+h1 {
+    margin: 0;
+    font-size: 2.6rem;
+    color: #ff7b00;
+    text-shadow: 0 0 12px #ff7b00;
+}
+
+.symbol {
+    font-size: 3.5rem;
+}
+
+/* INPUT */
+input {
+    width: 80%;
+    padding: 15px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background: rgba(255,120,0,0.08);
+    color: #ffd6a5;
+    text-align: center;
+}
+
+button {
+    margin-top: 15px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #ff7b00;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #ffa94d;
+}
+
+/* WAITLIST */
+.waitlist {
+    margin-top: 25px;
+    text-align: left;
+}
+
+.waitlist ul {
+    list-style: none;
+    padding: 0;
+}
+
+.waitlist li {
+    padding: 5px 0;
+    border-bottom: 1px dashed rgba(255,120,0,0.2);
+}
+
+/* SECTION BOX */
+.section-box {
+    max-width: 800px;
+    background: rgba(255,120,0,0.03);
+    border: 1px solid rgba(255,120,0,0.2);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+/* TIMELINE */
+.timeline {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.timeline div {
+    margin: 10px 0;
+    padding-left: 10px;
+    border-left: 2px solid #ff7b00;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#timeline">Timeline</a>
+</nav>
+
+<!-- HOME -->
+<section id="home">
+    <div class="container">
+        <h1>NukeDogeia</h1>
+        <div class="symbol">☢🐕‍🔥</div>
+
+        <p>
+            A civilization forged after a nuclear reactor collapse.  
+            Survivors worship Doges and protect the island with Dwagons.
+        </p>
+
+        <input type="text" id="nameInput" placeholder="Enter your name...">
+        <br>
+        <button onclick="join()">Join Waitlist</button>
+
+        <div id="response"></div>
+
+        <div class="waitlist">
+            <h3>☢ Waitlist</h3>
+            <ul id="waitlist"></ul>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="section-box">
+        <h2>About NukeDogeia</h2>
+        <p>
+            NukeDogeia is a remote island civilization that emerged after a catastrophic nuclear explosion at a forgotten power plant.
+            Radiation reshaped both the land and its inhabitants. Over time, survivors formed a culture centered around Doge worship,
+            believing these beings embody resilience, chaos, and guidance.
+        </p>
+        <p>
+            Dwagons—mutated guardian creatures—roam the island, protecting settlements from external threats and unstable radiation zones.
+            Society is organized through decentralized councils led by the Doge Priests.
+        </p>
+    </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+    <div class="section-box">
+        <h2>Timeline</h2>
+
+        <div class="timeline">
+            <div>⚠️ Year 0 — Reactor explosion devastates the island</div>
+            <div>☢ Year 3 — Survivors begin forming isolated clans</div>
+            <div>🐕 Year 7 — Doge worship emerges as a unifying belief</div>
+            <div>🔥 Year 12 — First recorded appearance of Dwagons</div>
+            <div>🛡 Year 20 — NukeDogeia formally established</div>
+        </div>
+    </div>
+</section>
+
+<script>
+const waitlist = [];
+
+function join() {
+    const nameInput = document.getElementById("nameInput");
+    const name = nameInput.value.trim();
+    const response = document.getElementById("response");
+
+    if (name === "") {
+        response.innerText = "A name is required to enter NukeDogeia.";
+        return;
+    }
+
+    waitlist.push(name);
+    updateWaitlist();
+
+    response.innerText = name + " added to the waitlist.";
+
+    nameInput.value = "";
+}
+
+function updateWaitlist() {
+    const list = document.getElementById("waitlist");
+    list.innerHTML = "";
+
+    waitlist.forEach((name, i) => {
+        const li = document.createElement("li");
+        li.textContent = (i + 1) + ". " + name;
+        list.appendChild(li);
+    });
+}
+</script>
+
+</body>
+</html>
