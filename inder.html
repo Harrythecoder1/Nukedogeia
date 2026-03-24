@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NukeDogeia</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #1a0f0f, #050202 70%);
+    color: #ffd6a5;
+}
+
+/* NAV */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 15px;
+    z-index: 1000;
+}
+
+nav a {
+    color: #ff7b00;
+    text-decoration: none;
+}
+
+/* SECTIONS */
+section {
+    min-height: 100vh;
+    padding: 120px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* CONTAINER */
+.container {
+    background: rgba(255, 80, 0, 0.05);
+    border: 1px solid rgba(255, 120, 0, 0.25);
+    border-radius: 20px;
+    padding: 30px;
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+}
+
+/* IMAGES */
+img {
+    width: 100%;
+    border-radius: 15px;
+    margin: 15px 0;
+}
+
+/* INPUT */
+input {
+    width: 80%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    text-align: center;
+    background: rgba(255,120,0,0.08);
+    color: #ffd6a5;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: none;
+    background: #ff7b00;
+    cursor: pointer;
+}
+
+/* WAITLIST */
+.waitlist {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.waitlist li {
+    padding: 5px 0;
+    border-bottom: 1px dashed rgba(255,120,0,0.2);
+}
+
+/* TIMELINE */
+.timeline div {
+    margin: 10px 0;
+    border-left: 2px solid #ff7b00;
+    padding-left: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#timeline">Timeline</a>
+</nav>
+
+<!-- HOME -->
+<section id="home">
+    <div class="container">
+        <h1>NukeDogeia ☢🐕‍🔥</h1>
+
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" alt="dystopian">
+
+        <p>
+            Enter the sacred waitlist of Doge descendants and Dwagon guardians.
+        </p>
+
+        <input id="nameInput" placeholder="Enter your name...">
+        <br>
+        <button onclick="join()">Join Waitlist</button>
+
+        <div id="response"></div>
+
+        <div class="waitlist">
+            <h3>☢ Waitlist</h3>
+            <ul id="waitlist"></ul>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="container">
+        <h2>About NukeDogeia</h2>
+
+        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470" alt="island">
+
+        <p>
+            After a nuclear reactor explosion, survivors formed a remote island civilization.
+            Radiation reshaped the land, and Doges became symbols of unity and survival.
+        </p>
+
+        <img src="https://images.unsplash.com/photo-1546182990-dffeafbe841d" alt="dog">
+
+        <p>
+            Dwagons emerged as mutated guardians, protecting the island from instability and outsiders.
+        </p>
+    </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+    <div class="container">
+        <h2>Timeline</h2>
+
+        <img src="https://images.unsplash.com/photo-1581091870622-1e7f8a2f2f3c" alt="reactor">
+
+        <div class="timeline">
+            <div>Year 0 — Reactor explosion</div>
+            <div>Year 3 — Survivor clans form</div>
+            <div>Year 7 — Doge worship begins</div>
+            <div>Year 12 — Dwagons appear</div>
+            <div>Year 20 — NukeDogeia established</div>
+        </div>
+    </div>
+</section>
+
+<script>
+let waitlist = [];
+
+// Load from localStorage
+window.onload = function () {
+    const saved = localStorage.getItem("nukedogeia_waitlist");
+    if (saved) {
+        waitlist = JSON.parse(saved);
+        updateWaitlist();
+    }
+};
+
+function join() {
+    const nameInput = document.getElementById("nameInput");
+    const name = nameInput.value.trim();
+    const response = document.getElementById("response");
+
+    if (!name) {
+        response.innerText = "Enter a valid name.";
+        return;
+    }
+
+    waitlist.push(name);
+
+    // Save
+    localStorage.setItem("nukedogeia_waitlist", JSON.stringify(waitlist));
+
+    updateWaitlist();
+
+    response.innerText = name + " added to the waitlist.";
+
+    nameInput.value = "";
+}
+
+function updateWaitlist() {
+    const list = document.getElementById("waitlist");
+    list.innerHTML = "";
+
+    waitlist.forEach((name, i) => {
+        const li = document.createElement("li");
+        li.textContent = (i + 1) + ". " + name;
+        list.appendChild(li);
+    });
+}
+</script>
+
+</body>
+</html>
